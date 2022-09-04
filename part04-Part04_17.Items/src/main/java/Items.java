@@ -13,9 +13,9 @@ public class Items {
         
         while(true){
             System.out.println("Name: ");
-            String name=scanner.nextLine();
-           
-            System.out.println(items.toString());
+            String name=scanner.nextLine();// receive new item names from user
+            items.add(new Item(name));// add the new items to the list
+            System.out.println(items.toString());// print the items class method
             if(name.isEmpty()){
                 break;    
             }
