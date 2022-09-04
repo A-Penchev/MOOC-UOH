@@ -9,6 +9,19 @@ public class Items {
 
         ArrayList<Item> items = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
+        
+        
+        while(true){
+            System.out.println("Name: ");
+            String name=scanner.nextLine();
+           
+            System.out.println(items.toString());
+            if(name.isEmpty()){
+                break;    
+            }
+        }
+        
+        
 
     }
 }
