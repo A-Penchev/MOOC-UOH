@@ -5,56 +5,63 @@ import java.util.Scanner;
  
 public class SportStatistics {
  
-    public static void main(String args[]) {
- 
-        ArrayList<SportsTeam> teams = new ArrayList<>();
-        Scanner scanner = new Scanner(System.in);
- 
-        System.out.println("File:");
-        String file = scanner.nextLine();
-        System.out.println("Team:");
-        String team = scanner.nextLine();
- 
-        try ( Scanner find = new Scanner(Paths.get(file))) {
-            while (find.hasNextLine()) {
- 
-                String[] split = find.nextLine().split(",");
+    public static void main(String[] args) {
+    Scanner scan = new Scanner(System.in);
 
-                String teamOneName = split[0];
-                int teamOnePoints = Integer.parseInt(split[2]);
- 
-                String teamTwoName = split[1];
-                int teamTwoPoints = Integer.parseInt(split[3]);
- 
-                SportsTeam team1 = new SportsTeam(teamOneName, teamOnePoints);
-                SportsTeam team2 = new SportsTeam(teamTwoName, teamTwoPoints);
-                teams.add(team1);
-                teams.add(team2);
-                if (team1.getPoints() > team2.getPoints()) {
-                    team1.winGame();
-                    team2.loseGame();
-                } else {
-                    team1.loseGame();
-                    team2.winGame();
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error: File " + file + " not found: " + e.getMessage());
+    System.out.println("File: ");
+    String fileName = scan.nextLine();
+
+    ArrayList<SportsTeam> games = readFromFile(fileName);
+    System.out.println("Team: ");
+    String team = scan.nextLine();
+
+    // Count only the matches of the specified team
+    ArrayList<SportsTeam> gamesOfATeam = new ArrayList<>();
+    for (SportsTeam game : games) {
+        if (team.equals(game.getHomeTeam()) || team.equals(game.getOpponent())) {
+            gamesOfATeam.add(game);
         }
-        // ---------------------------
-        int gamesPlayed = 0;
-        int wins = 0;
-        int losses = 0;
-        for (SportsTeam name : teams) {
- 
-            if (name.getTeam().equals(team)) {
-                gamesPlayed++;
-                wins = name.getWins();
-                losses = name.getLosses();
-            }
-        }
-        System.out.println("Games: " + gamesPlayed);
-        System.out.println("Wins: " + wins);
-        System.out.println("Losses: " + losses);
     }
+
+    // print the number of games
+    System.out.println("Games: " + gamesOfATeam.size());
+
+    // count the number of wins
+    int wins = 0;
+    for (SportsTeam game : gamesOfATeam) {
+        if (game.winnerIs(team)) {
+            wins++;
+        }
+    }
+    System.out.println("Wins: " + wins);
+    System.out.println("Losses: " + (gamesOfATeam.size() - wins));
+
+}
+
+public static ArrayList<SportsTeam> readFromFile(String fileName) {
+    ArrayList<SportsTeam> games = new ArrayList<>();
+
+    try (Scanner scan = new Scanner(Paths.get(fileName))) {
+        while (scan.hasNextLine()) {
+            String line = scan.nextLine();
+            if (line.isEmpty()) {
+                continue;
+            }
+
+            String[] parts = line.split(",");
+
+            String homeTeam = parts[0];
+            String opposingTeam = parts[1];
+
+            int homePoints = Integer.valueOf(parts[2]);
+            int opposingPoints = Integer.valueOf(parts[3]);
+
+            games.add(new SportsTeam(homeTeam, opposingTeam, homePoints, opposingPoints));
+        }
+    } catch (Exception e) {
+        System.out.println("Failed to read from file.");
+    }
+
+    return games;
+}
 }

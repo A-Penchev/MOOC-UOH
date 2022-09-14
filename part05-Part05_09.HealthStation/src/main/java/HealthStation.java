@@ -1,10 +1,19 @@
 
 public class HealthStation {
-
-
+    private int weighings;
+    
     public int weigh(Person person) {
-        // return the weight of the person passed as the parameter
-        return -1;
+        this.weighings++;
+        int weight=person.getWeight();
+        return weight;
     }
-
+    public void feed(Person person){
+        int a=person.getWeight();
+        a++;
+        person.setWeight(a);
+    }
+    public int weighings(){
+        this.weighings=weighings;
+        return this.weighings;
+    }
 }

@@ -2,40 +2,36 @@
  
 public class SportsTeam {
     
-    private String team;
-    private int points;
-    private int wins;
-    private int losses;
-    
-    public SportsTeam(String team, int points) {
-        this.team = team;
-        this.points = points;
+    private String hometeam;
+    private String opposingteam;
+    private int homepoints;
+    private int opposingpoints;
+
+public SportsTeam(String hometeam, String opposingteam, int homepoints, int opposingpoints) {
+    this.hometeam = hometeam;
+    this.opposingteam = opposingteam;
+    this.homepoints = homepoints;
+    this.opposingpoints = opposingpoints;
+}
+
+public String getHomeTeam() {
+    return hometeam;
+}
+
+public String getOpponent() {
+    return opposingteam;
+}
+
+public boolean winnerIs(String team) {
+    if (team.equals(hometeam) && homepoints > opposingpoints) {
+        return true;
     }
-    
-    public String getTeam() {
-        return team;
+
+    if (team.equals(opposingteam) && opposingpoints > homepoints) {
+        return true;
     }
-    
-    public int getPoints() {
-        return points;
-    }
-    
-    public int winGame() {
-        wins++;
-        return wins;
-    }
-    
-    public int loseGame() {
-        losses++;
-        return losses;
-    }
-    
-    public int getWins() {
-        return wins;    
-    }
-    
-    public int getLosses() {
-        return losses;
+
+    return false;
     }
 }
  
