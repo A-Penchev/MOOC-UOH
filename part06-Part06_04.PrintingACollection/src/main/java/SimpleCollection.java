@@ -19,4 +19,21 @@ public class SimpleCollection {
         return this.elements;
     }
     
+    public String toString(){
+        String valuesTotal="";
+        for(String values: elements){
+            valuesTotal=valuesTotal+values+"\n";
+        }
+        if(this.elements.size()==1){
+            String valuesTotal2=elements.get(0);
+            return "The collection "+this.name+" has "+this.elements.size()+" element:"+"\n"+valuesTotal2;
+                }
+        
+        if(this.elements.size()>1){
+            return "The collection "+this.name+" has "+this.elements.size()+" elements:"+"\n"+valuesTotal;
+            }
+        
+            return "The collection "+this.name+" is empty.";
+    }
+    
 }
